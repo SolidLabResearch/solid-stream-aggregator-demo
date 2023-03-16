@@ -18,5 +18,13 @@
         "supertest": "^6.3.3",
         "ts-jest": "^29.0.3",
         "typescript": "^4.9.4"
+    },
+    "dependencies": {
+        "@comunica/query-sparql": "^2.6.9",
+        "@comunica/query-sparql-link-traversal": "^0.1.1",
+        "@treecg/versionawareldesinldp": "^0.2.0",
+        "cors": "^2.8.5",
+        "rsp-js": "^1.0.1",
+        "websocket": "^1.0.34"
     }
 }
