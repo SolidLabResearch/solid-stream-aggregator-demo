@@ -43,5 +43,3 @@ the current time.
 and the other for the average heart rate of the patient 2 (/averageHRPatient3).
 - When triggering the API endpoint, the aggregator will fetch the latest events from the solid pod, aggregate them and 
 then publish the aggregated stream to the aggregation pod.
-- The aggregator also supports queries which are not predecided. For example, you can pass a SPARQL query to the 
-aggregator. 
