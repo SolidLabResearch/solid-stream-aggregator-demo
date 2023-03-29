@@ -18,9 +18,12 @@ the four patients and one as the aggregation pod.
 and is only for testing purposes till long term authentication is implemented
   (see [here](https://github.com/SolidLabResearch/Challenges/issues/13))
 ```bash
-npx community-solid-server --config ./pod/config/unsafe.json -f ./data/ --seededPodConfigJson ./pod/multiSolidPod.json
+npx community-solid-server --config ./src/pod/config/unsafe.json -f ./pod/ --seededPodConfigJson ./src/pod/multiSolidPod.json
 ```
-Now, the solid pods are created.
+
+Note: The community solid server works with LTS versions of node. If you are using a non LTS version of node, you may download the LTS version of node and use it to run the community solid server.
+
+After this, the solid pods are created.
 
 ### Loading up the data to the solid pod.
 - The datasets for the four patients are in the repository [here](https://github.com/argahsuknesib/dahcc-heartrate) .
@@ -43,3 +46,4 @@ the current time.
 and the other for the average heart rate of the patient 2 (/averageHRPatient3).
 - When triggering the API endpoint, the aggregator will fetch the latest events from the solid pod, aggregate them and 
 then publish the aggregated stream to the aggregation pod.
+
