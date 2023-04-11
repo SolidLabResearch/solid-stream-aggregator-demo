@@ -38,21 +38,6 @@ export class HTTPServer {
             res.send('Hello World!');
         });
 
-        app.get('/test', (req: any, res: any) => {
-            let query = `
-            PREFIX : <https://rsp.js/> PREFIX saref: <https://saref.etsi.org/core/> PREFIX dahccsensors: <https://dahcc.idlab.ugent.be/Homelab/SensorsAndActuators/>
-         REGISTER RStream <output> AS
-         SELECT (AVG(?o) AS ?averageAcceleration)
-         FROM NAMED WINDOW :w1 ON STREAM <http://localhost:3000/dataset_participant1/data/> [RANGE 10 STEP 2]
-         WHERE{
-             WINDOW :w1 { ?s saref:hasValue ?o .
-                    } 
-                }
-            `
-            console.log(`Received request on /test`);
-            new AggregatorInstantiator(query, this.minutes, this.serverURL);
-        });
-
         app.get('/averageHRPatient1', (req: any, res: any) => {
             let query = `  
             PREFIX saref: <https://saref.etsi.org/core/> 
@@ -70,17 +55,21 @@ export class HTTPServer {
             new AggregatorInstantiator(query, minutes, 'http://localhost:3000/');
         });
 
-        // TODO : work on the SPARQL to RSPQL conversion.
-
-        /*
-        To be used as, /sparql?value=SELECT * WHERE { ?s ?p ?o }?aggregationFunction=AVG
-        */
-        app.get('/sparql', (req: any, res: any) => {
-            let query: string = req.query.value;
-            let aggregationFunction:string = req.query.aggregationFunction;
-            let value = sparqlToRSPQL.getRSPQLQuery(query);
-            console.log(`The aggregation function is: ${aggregationFunction}`);
-            console.log(`The RSP-QL Query is: ${value}`);
+        app.get('/averageHRPatient2', (req: any, res: any) => {
+            let query = `
+            PREFIX saref: <https://saref.etsi.org/core/>
+            PREFIX dahccsensors: <https://dahcc.idlab.ugent.be/Homelab/SensorsAndActuators/>
+            PREFIX : <https://rsp.js/>
+            REGISTER RStream <output> AS
+            SELECT (AVG(?o) AS ?averageHR2)
+            FROM NAMED WINDOW :w1 ON STREAM <http://localhost:3000/dataset_participant2/data/> [RANGE 10 STEP 2]
+            WHERE{
+                WINDOW :w1 { ?s saref:hasValue ?o .
+                                ?s saref:relatesToProperty dahccsensors:wearable.bvp .}
+            }
+            `;
+            res.send('Received request on /averageHRPatient2');
+            new AggregatorInstantiator(query, minutes, 'http://localhost:3000/');
         });
 
         wss.on('request', async (request: any) => {
@@ -124,7 +113,6 @@ export class HTTPServer {
             eventEmitter.on('close', () => {
                 console.log('Closing connection');
             });
-
         });
     }
 

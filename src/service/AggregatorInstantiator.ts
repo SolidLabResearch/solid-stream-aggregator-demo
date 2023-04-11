@@ -40,7 +40,13 @@ export class AggregatorInstantiator {
 
 
     async instantiateAggregator(LILContainer: string, query: string) {
-        new SinglePodAggregator(LILContainer, query, 'ws://localhost:8080/', new Date(this.currentTime - this.latestMinutes), this.currentTime, LILContainer);
+        new SinglePodAggregator(LILContainer, query, 'ws://localhost:8080/', "2022-11-07T09:27:17.5890", "2028-11-07T09:27:17.5890", LILContainer);
+
+        /**
+         * This code is used to test the aggregator with a fixed time interval. But for the demo, for simplicity we hardcode the time interval to basically get all of the data.
+        new SinglePodAggregator(LILContainer, query, 'ws://localhost:8080/', new Date(this.currentTime - this.latestMinutes), this.currentTime, LILContainer); 
+         */
+
     }
 
 }

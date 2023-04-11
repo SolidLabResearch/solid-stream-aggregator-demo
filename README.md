@@ -1,49 +1,80 @@
-# Solid Stream Aggregator Demo
+# Solid Stream Aggregator Demonstration
 
-This is an example setup of the [Solid Stream Aggregator](https://github.com/argahsuknesib/solid-stream-aggregator) 
-repository for completion of the [SolidLab Challenge 84](https://github.com/SolidLabResearch/Challenges/issues/84) .
+This is a demonstration repository for the [Solid Stream Aggregator](https://github.com/argahsuknesib/solid-stream-aggregator) for the completion of the 
+SolidLab Research's Challenge [84](https://github.com/solidLabResearch/challenges/issues/84).
 
-## Setup
-
-### Setting up the Solid Pods.
-- We create one solid pod for each patient participant.
-- Download the Community Solid Server's NPM package.
+### Pre-requisites
+- Install the Community Solid Server 
 ```bash
 npm install -g @solid/community-server
 ```
-- The multiSolidPod.json file contains the configuration for the Community Solid Server to create four solid pods for
-the four patients and one as the aggregation pod.
-- Run the Community Solid Server with the multiSolidPod.json file.
-- The Community Solid Server's configuration we are using is the unsafe.json file which has no authentication enabled
-and is only for testing purposes till long term authentication is implemented
-  (see [here](https://github.com/SolidLabResearch/Challenges/issues/13))
+**NOTE** : The community solid server only works with the LTS releases of NodeJS.
+
+- Clone this repository.
 ```bash
-npx community-solid-server --config ./src/pod/config/unsafe.json -f ./pod/ --seededPodConfigJson ./src/pod/multiSolidPod.json
+git clone https://github.com/argahsuknesib/ssa-demo/
 ```
 
-Note: The community solid server works with LTS versions of node. If you are using a non LTS version of node, you may download the LTS version of node and use it to run the community solid server.
+## Setup
 
-After this, the solid pods are created.
+### Setting up the solid pods with the data.
+For the demonstration, we use the [DAHCC dataset](https://dahcc.idlab.ugent.be/dataset.html) which is an anonymized dataset of patients who lived in UGent's homlab. 
+Each patient owns a solid pod to themselves. We use four patients for the demonstration.
+The /scripts/data folder contains the data to spin up the solid pod for each patient with the DAHCC dataset.
 
-### Loading up the data to the solid pod.
-- The datasets for the four patients are in the repository [here](https://github.com/argahsuknesib/dahcc-heartrate) .
-- We use the [LDES in SOLID Semantic Observations Replay](https://github.com/SolidLabResearch/LDES-in-SOLID-Semantic-Observations-Replay)
-to load up the datasets into the solid pods.
-- Please follow the instructions in the 
-[README.md file](https://github.com/SolidLabResearch/LDES-in-SOLID-Semantic-Observations-Replay/blob/main/README.md) 
-of the repository to load up the data with the datasets 
+To spin up the solid pods, run the following command from the root of the repository.
+```bash
+npm run start-solid-server
+```
+This will generate the solidpod for the patients at http://localhost:3000/ . For example, the solid pod for the patient 1 will be at, http://localhost:3000/dataset_participant1/
 
-Now, you have the solid pods loaded up with the data.
+The /data/ folder contains the dataset for the patients.
 
-### Aggregation
-- As the solid pods are located at http://localhost:3000/ , which is also the default solid server location of the
-aggregator, in any case you will have to explicitly specify the solid server location in the CLI.
-- Similarly, the aggregator is located at http://localhost:8080/ by default.
-- You can also specify the latest minutes of events to be aggregated from the solid pod. By default, it is 30 minutes. 
-This means that, the aggregator will only fetch and aggregate the events that are within the last 30 minutes from
-the current time.
-- The aggregator has two API endpoints, one for the average heart rate of the patient 1 (/averageHRPatient1)
-and the other for the average heart rate of the patient 2 (/averageHRPatient3).
-- When triggering the API endpoint, the aggregator will fetch the latest events from the solid pod, aggregate them and 
-then publish the aggregated stream to the aggregation pod.
+### Aggregation over the solid pods.
 
+To start the solid stream aggregator, run the following command from the root of the repository.
+```bash
+npm run start aggregation
+```
+The solid stream aggregator spuns up an HTTP express server at http://localhost:8080/.
+
+ The server exposes the following endpoints for the demonstration,
+- /averageHRPatient1
+- /averageHRPatient2
+
+For example, the query for passed when requesting the endpoint /averageHRPatient1 is,
+```sparql
+PREFIX saref: <https://saref.etsi.org/core/> 
+PREFIX dahccsensors: <https://dahcc.idlab.ugent.be/Homelab/SensorsAndActuators/>
+PREFIX : <https://rsp.js/>
+REGISTER RStream <output> AS
+SELECT (AVG(?o) AS ?averageHR1)
+FROM NAMED WINDOW :w1 ON STREAM <http://localhost:3000/dataset_participant1/data/> [RANGE 10 STEP 2]
+      WHERE{
+            WINDOW :w1 { ?s saref:hasValue ?o .
+                        ?s saref:relatesToProperty dahccsensors:wearable.bvp .}
+            }
+```
+Once the solid stream aggregator is running, request one of the endpoints to instantiate the query with this command and start the aggregation.
+
+```bash
+curl http://localhost:8080/averageHRPatient1
+```
+
+The aggregation has started, and the results are being written to the 
+http://localhost:3000/aggregation_pod/
+
+**NOTE** : The writing the aggregation stream to the aggregation pod might take some time due to the Naive Algorithm of rebalancing and can slow up the solid pod.
+
+
+### Reading the aggregation results.
+
+The aggregation results are written to a LDP container the aggregation pod at http://localhost:3000/aggregation_pod/data/ . Each aggregation event is an LDP resource.
+
+The aggregated result is then visualised by the SolidLab Research Challenge [85](https://github.com/solidLabResearch/challenges/issues/85).
+
+## License
+Copyright (c) Kushagra Singh Bisen 2023 -. All rights reserved. 
+
+## Contact 
+Mail kushagrasingh.bisen@ugent.be if you have any questions.
