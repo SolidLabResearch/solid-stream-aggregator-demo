@@ -4,10 +4,6 @@ This is a demonstration repository for the [Solid Stream Aggregator](https://git
 SolidLab Research's Challenge [84](https://github.com/solidLabResearch/challenges/issues/84).
 
 ### Pre-requisites
-- Install the Community Solid Server 
-```bash
-npm install -g @solid/community-server
-```
 **NOTE** : The community solid server only works with the LTS releases of NodeJS.
 
 - Clone this repository.
@@ -31,7 +27,11 @@ This will generate the solidpod for the patients at http://localhost:3000/ . For
 The /data/ folder contains the dataset for the patients.
 
 ### Aggregation over the solid pods.
-
+Spun up a new instance of the terminal.
+Build the project by running the following command from the root of the repository.
+```bash
+npm run build
+```
 To start the solid stream aggregator, run the following command from the root of the repository.
 ```bash
 npm run start aggregation
@@ -74,7 +74,7 @@ The aggregation results are written to a LDP container the aggregation pod at ht
 The aggregated result is then visualised by the SolidLab Research Challenge [85](https://github.com/solidLabResearch/challenges/issues/85).
 
 ## License
-Copyright (c) Kushagra Singh Bisen 2023 -. All rights reserved. 
+Copyright (c) Kushagra Singh Bisen 2023 - . All rights reserved. 
 
 ## Contact 
 Mail kushagrasingh.bisen@ugent.be if you have any questions.

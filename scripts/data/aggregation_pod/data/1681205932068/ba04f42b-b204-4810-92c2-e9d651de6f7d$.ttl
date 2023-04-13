@@ -1,5 +1,0 @@
-<https://rsp.js/AggregationEvent192> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://saref.etsi.org/core/Measurement> .
-<https://rsp.js/AggregationEvent192> <https://saref.etsi.org/core/hasTimestamp> "2023-04-11T09:43:54.833Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> .
-<https://rsp.js/AggregationEvent192> <https://saref.etsi.org/core/hasValue> "0"^^<http://www.w3.org/2001/XMLSchema#float> .
-<https://rsp.js/AggregationEvent192> <http://www.w3.org/ns/prov#wasDerivedFrom> <https://argahsuknesib.github.io/asdo/AggregatorService> .
-<https://rsp.js/AggregationEvent192> <http://www.w3.org/ns/prov#generatedBy> <http://localhost:3000/dataset_participant1/data/> .
