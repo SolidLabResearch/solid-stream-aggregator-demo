@@ -8,7 +8,9 @@
         "start": "node dist/index.js",
         "test": "jest --coverage",
         "test:watch": "jest --watch",
-        "start-solid-server": "cd scripts && rm -rf data/.internal/ && npx community-solid-server --config ./pod/config/unsafe.json -f ./data/ --seededPodConfigJson ./pod/multiSolidPod.json"
+        "start-solid-server": "cd scripts && rm -rf data/.internal/ && npx community-solid-server --config ./pod/config/unsafe.json -f ./data/ --seededPodConfigJson ./pod/multiSolidPod.json",
+        "getHeartRatePatient1": "curl http://localhost:8080/averageHRPatient1",
+        "getHeartRatePatient2": "curl http://localhost:8080/averageHRPatient2"
     },
     "keywords": [],
     "author": "Kushagra Singh Bisen",
@@ -23,7 +25,6 @@
     "dependencies": {
         "@comunica/query-sparql": "^2.6.9",
         "@comunica/query-sparql-link-traversal": "^0.1.1",
-        "@solid/community-server": "^5.1.0",
         "@treecg/versionawareldesinldp": "^0.2.0",
         "cors": "^2.8.5",
         "rsp-js": "^1.0.1",
