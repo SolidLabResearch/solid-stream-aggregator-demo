@@ -140,7 +140,8 @@ The aggregation results are written to a LDP container the aggregation pod at ht
 The aggregated result is then visualised by the SolidLab Research Challenge [85](https://github.com/solidLabResearch/challenges/issues/85).
 
 ## License
-Copyright (c) Kushagra Singh Bisen 2023 - . All rights reserved. 
+ 
+This code is copyrighted by [Ghent University - imec](https://www.ugent.be/ea/idlab/en) and released under the [MIT Licence](./LICENCE)
 
 ## Contact 
 Mail kushagrasingh.bisen@ugent.be if you have any questions.

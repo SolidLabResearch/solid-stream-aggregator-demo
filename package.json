@@ -14,7 +14,7 @@
     },
     "keywords": [],
     "author": "Kushagra Singh Bisen",
-    "license": "ISC",
+    "license": "MIT",
     "devDependencies": {
         "@types/jest": "^29.2.4",
         "jest": "^29.3.1",
@@ -25,6 +25,7 @@
     "dependencies": {
         "@comunica/query-sparql": "^2.6.9",
         "@comunica/query-sparql-link-traversal": "^0.1.1",
+        "@solid/community-server": "^5.1.0",
         "@treecg/versionawareldesinldp": "^0.2.0",
         "cors": "^2.8.5",
         "rsp-js": "^1.0.1",
