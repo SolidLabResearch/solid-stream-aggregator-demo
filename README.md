@@ -10,6 +10,16 @@ SolidLab Research's Challenge [84](https://github.com/solidLabResearch/challenge
 ```bash
 git clone https://github.com/argahsuknesib/ssa-demo/
 ```
+- Do an npm install from the root of the repository.
+```bash
+npm install
+```
+- Install the community solid server. 
+**NOTE** : Install the community solid server globally instead of locally. Installing the community solid server will cause component.js issues in the node_modules folder.
+```bash
+npm install -g @solid/community-server
+```
+
 
 ## Setup
 
