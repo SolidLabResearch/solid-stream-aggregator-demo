@@ -1,44 +1,53 @@
 # Solid Stream Aggregator Demonstration
 
-This is a demonstration repository for the [Solid Stream Aggregator](https://github.com/argahsuknesib/solid-stream-aggregator) for the completion of the 
+This is a demonstration repository for the [Solid Stream Aggregator](https://github.com/argahsuknesib/solid-stream-aggregator) for the completion of the
 SolidLab Research's Challenge [84](https://github.com/solidLabResearch/challenges/issues/84).
 
 ### Pre-requisites
+
 **NOTE** : The community solid server only works with the LTS releases of NodeJS.
 
-- Clone this repository.
+1. Clone this repository.
+
 ```bash
 git clone https://github.com/argahsuknesib/ssa-demo/
 ```
-- Do an npm install from the root of the repository.
+
+2.  Do an npm install from the root of the repository.
+
 ```bash
 npm install
 ```
-- Install the community solid server. 
-**NOTE** : Install the community solid server globally instead of locally. Installing the community solid server will cause component.js issues in the node_modules folder.
+
+3. Install the community solid server.
+  **NOTE** : Install the community solid server globally instead of locally. Installing the community solid server will cause component.js issues in the node_modules folder.
+
 ```bash
 npm install -g @solid/community-server
 ```
 
-
 ## Setup
 
 ### Setting up the solid pods with the data.
-For the demonstration, we use the [DAHCC dataset](https://dahcc.idlab.ugent.be/dataset.html) which is an anonymized dataset of patients who lived in UGent's homlab. 
+
+For the demonstration, we use the [DAHCC dataset](https://dahcc.idlab.ugent.be/dataset.html) which is an anonymized dataset of patients who lived in UGent's homlab.
 Each patient owns a solid pod to themselves. We use four patients for the demonstration.
 The /scripts/data/ folder contains the data to spin up the solid pod for each patient with the DAHCC dataset.
 
-To spin up the solid pods, run the following command from the root of the repository.
+4. To spin up the solid pods, run the following command from the root of the repository.
+
 ```bash
 npm run start-solid-server
 ```
+
 This will generate the solidpod for the patients at http://localhost:3000/ . For example, the solid pod for the patient 1 will be at, http://localhost:3000/dataset_participant1/
 
 The /data/ folder contains the dataset for the patients.
 
 ### Loading up the data in the solid pods.
 
-After the solid pods are setup, we would like to load some test data to aggregate over. The dataset we are using is the [DAHCC dataset](https://dahcc.idlab.ugent.be/dataset.html). For simplicity, we have mapped a portion of the DAHCC dataset to .n3 files. To get the dataset, clone the repository with,
+After the solid pods are setup, we would like to load some test data to aggregate over. The dataset we are using is the [DAHCC dataset](https://dahcc.idlab.ugent.be/dataset.html). For simplicity, we have mapped a portion of the DAHCC dataset to .n3 files.
+5. To get the dataset, clone the repository with,
 
 ```bash
 git clone https://github.com/argahsuknesib/dahcc-heartrate.git
@@ -46,25 +55,30 @@ git clone https://github.com/argahsuknesib/dahcc-heartrate.git
 
 To loadup the data, we use the LDES in Solid Observations Replay repository.
 
-Clone the repository with,
+6. Clone the repository with,
+
 ```bash
 git clone https://github.com/SolidLabResearch/LDES-in-SOLID-Semantic-Observations-Replay
 ```
 
-Go to the /engine/ folder and install the dependencies with,
+7. Go to the /engine/ folder and install the dependencies with,
+
 ```bash
 cd engine && npm install
 ```
-Edit the `src/config/replay_properties.json` file by adding the location of the folder in the "datasetFolders" field where you cloned the /dahcc-heartrate/ repository. Add the location of the solid pod's /data/ folder in the "lilURL" field.
 
-For exmaple, 
+8. Edit the `src/config/replay_properties.json` file by adding the location of the folder in the "datasetFolders" field where you cloned the /dahcc-heartrate/ repository. Add the location of the solid pod's /data/ folder in the "lilURL" field.
+
+For exmaple,
 
 `"lilURL" : "http://localhost:3000/dataset_participant1/data/"`
 
-Start the engine with 
+9. Start the engine with
+
 ```bash
 npm start
 ```
+
 The output should look similar to the following:
 
 ```shell
@@ -76,6 +90,7 @@ The output should look similar to the following:
 
 2022-12-08T14:58:54.612Z [WEB API] info: Express is listening at http://localhost:3001
 ```
+
 REMARK: Should you receive following error message
 
 ```shell
@@ -85,42 +100,58 @@ REMARK: Should you receive following error message
 66     const comm = session ? new SolidCommunication(session) : new LDPCommunication();
 ```
 
-Please delete the folder `node_modules\@treecg\versionawareldesinldp\node_modules\@inrupt`. 
-This is due to conflicting dependencies and 
+10. Please delete the folder `node_modules\@treecg\versionawareldesinldp\node_modules\@inrupt`.
+This is due to conflicting dependencies and
 should be resolved once the `versionawareldesinldp` package has been refactored.
 
 ### Starting the webapp to load
 
-The webapp is a simple vue app that allows you to load the data into the solid pods. To start the webapp, run the following command from the root of the repository.
+The webapp is a simple vue app that allows you to load the data into the solid pods. 
+
+11. To start the webapp, run the following command from the root of the repository.
+
 ```bash
 cd webapp && npm install && npm run dev
 ```
 
-Open the webapp, select a dataset to be loaded. Click on, `Load selected dataset`.
+12. Open the webapp, select a dataset to be loaded. Click on, `Load selected dataset`.
 
-Then click on, 'Sort observation subjects' followed by `Submit remaining observations`.
+13. Click on `Get Observation Subjects` to get the observation subjects from the dataset.
+
+14. Then click on, 'Sort observation subjects' and then `submit next observation`.
+Press this button 3 times, till you see the replayer count as 3.
+Now the pod will have 3 observations.
+
+15. Then click on `Submit remaining observations` to submit the rest.
 
 The data will be loaded up in the solid pod.
 
-
 ### Aggregation over the solid pods.
+
 Spun up a new instance of the terminal.
-Build the project by running the following command from the root of the repository.
+
+16. Build the project by running the following command from the root of the repository.
+
 ```bash
 npm run build
 ```
-To start the solid stream aggregator, run the following command from the root of the repository.
+
+17. To start the solid stream aggregator, run the following command from the root of the repository.
+
 ```bash
 npm run start aggregation
 ```
+
 The solid stream aggregator spuns up an HTTP express server at http://localhost:8080/.
 
- The server exposes the following endpoint for the demonstration,
+The server exposes the following endpoint for the demonstration,
+
 - /averageHRPatient1
 
 For example, the query for passed when requesting the endpoint /averageHRPatient1 is,
+
 ```sparql
-PREFIX saref: <https://saref.etsi.org/core/> 
+PREFIX saref: <https://saref.etsi.org/core/>
 PREFIX dahccsensors: <https://dahcc.idlab.ugent.be/Homelab/SensorsAndActuators/>
 PREFIX : <https://rsp.js/>
 REGISTER RStream <output> AS
@@ -131,17 +162,17 @@ FROM NAMED WINDOW :w1 ON STREAM <http://localhost:3000/dataset_participant1/data
                         ?s saref:relatesToProperty dahccsensors:wearable.bvp .}
             }
 ```
-Once the solid stream aggregator is running, request one of the endpoints to instantiate the query with this command and start the aggregation.
+
+18. Once the solid stream aggregator is running, request one of the endpoints to instantiate the query with this command and start the aggregation.
 
 ```bash
 curl http://localhost:8080/averageHRPatient1
 ```
 
-The aggregation has started, and the results are being written to the 
+The aggregation has started, and the results are being written to the
 http://localhost:3000/aggregation_pod/
 
 **NOTE** : The writing the aggregation stream to the aggregation pod might take some time due to the Naive Algorithm of rebalancing and can slow up the solid pod.
-
 
 ### Reading the aggregation results.
 
@@ -150,8 +181,9 @@ The aggregation results are written to a LDP container the aggregation pod at ht
 The aggregated result is then visualised by the SolidLab Research Challenge [85](https://github.com/solidLabResearch/challenges/issues/85).
 
 ## License
- 
+
 This code is copyrighted by [Ghent University - imec](https://www.ugent.be/ea/idlab/en) and released under the [MIT Licence](./LICENCE)
 
-## Contact 
-Mail kushagrasingh.bisen@ugent.be if you have any questions.
+## Contact
+
+For any questions, please contact [Kush](mailto:kushagrasingh.bisen@ugent.be).
