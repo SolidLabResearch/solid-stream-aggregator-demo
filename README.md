@@ -146,8 +146,13 @@ Open a new instance of the terminal.
    ```bash
    npm run build
    ```
+2. Install the Community Solid Server locally by running the following command from the root of the repository.
 
-2. To start the Solid stream aggregator, run the following command from the root of the repository.
+   ```bash
+   npm install -save-dev @solid/community-server
+   ```
+
+3. To start the Solid stream aggregator, run the following command from the root of the repository.
 
    ```bash
    npm run start aggregation
@@ -170,7 +175,7 @@ Open a new instance of the terminal.
               }
    ```
 
-3. Once the Solid stream aggregator is running, 
+4. Once the Solid stream aggregator is running, 
    request the endpoint to instantiate the query to start the aggregation.
 
    ```bash
