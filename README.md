@@ -149,7 +149,7 @@ Open a new instance of the terminal.
 2. Install the Community Solid Server locally by running the following command from the root of the repository.
 
    ```bash
-   npm install -save-dev @solid/community-server
+   npm install --save-dev @solid/community-server
    ```
 
 3. To start the Solid stream aggregator, run the following command from the root of the repository.
