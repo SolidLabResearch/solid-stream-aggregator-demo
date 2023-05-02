@@ -19,7 +19,7 @@ SolidLab Research's Challenge [84](https://github.com/solidLabResearch/challenge
    npm install
    ```
 
-3. Install the community solid server.
+3. Install the Community Solid Server.
    **NOTE**: Install the Community Solid Server globally instead of locally. 
    Installing the Community Solid Server will cause component.js issues in the `node_modules` folder.
 
@@ -29,7 +29,7 @@ SolidLab Research's Challenge [84](https://github.com/solidLabResearch/challenge
 
 ## Setup
 
-### Setting up the solid pods with the data.
+### Setting up the Solid pods with the data.
 
 For the demonstration, we use the [DAHCC dataset](https://dahcc.idlab.ugent.be/dataset.html) 
 which is an anonymized dataset of patients who lived in UGent's HomeLab.
@@ -49,9 +49,9 @@ For example, the Solid pod for the patient 1 will be at http://localhost:3000/da
 
 The `/data/` folder contains the dataset for the patients.
 
-### Loading up the data in the Solid pods.
+### Loading up the data in the Solid pods
 
-After the solid pods are set up, 
+After the Solid pods are set up, 
 we would like to load some test data to aggregate over. 
 The dataset we are using is the [DAHCC dataset](https://dahcc.idlab.ugent.be/dataset.html). 
 For simplicity, we have mapped a portion of the DAHCC dataset to N3 files
@@ -118,7 +118,7 @@ in [this repository](https://github.com/argahsuknesib/dahcc-heartrate).
 
 ### Starting the webapp to load
 
-The webapp is a simple vue app that allows you to load the data into the solid pods. 
+The webapp is a simple vue app that allows you to load the data into the Solid pods. 
 
 1. To start the webapp, run the following command from the root of the repository.
 
@@ -135,9 +135,9 @@ The webapp is a simple vue app that allows you to load the data into the solid p
    Now the pod will have 3 observations.
 
 6. Click on the `Submit remaining observations` button to submit the rest. 
-   The data will be loaded up in the solid pod.
+   The data will be loaded up in the Solid pod.
 
-### Aggregation over the Solid pods.
+### Aggregation over the Solid pods
 
 Open a new instance of the terminal.
 
@@ -183,7 +183,7 @@ Open a new instance of the terminal.
 **NOTE**: The writing of the aggregation stream to the aggregation pod might take some time due to the 
 Naive Algorithm of rebalancing and can slow down the Solid pod.
 
-### Reading the aggregation results.
+### Reading the aggregation results
 
 The aggregation results are written to a LDP container the aggregation pod at http://localhost:3000/aggregation_pod/data/ . 
 Each aggregation event is an LDP resource.
