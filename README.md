@@ -10,7 +10,7 @@ SolidLab Research's Challenge [84](https://github.com/solidLabResearch/challenge
 1. Clone this repository.
 
    ```bash
-   git clone https://github.com/argahsuknesib/solid-stream-aggregator-demo/
+   git clone https://github.com/argahsuknesib/ssa-demo/
    ```
 
 2. Install the dependencies from the root of the repository.
