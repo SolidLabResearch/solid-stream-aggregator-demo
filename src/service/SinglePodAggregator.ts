@@ -49,7 +49,11 @@ export class SinglePodAggregator {
         });
         this.client.on('connect', async (connection: typeof websocketConnection) => {
             console.log('WebSocket Client Connected');
-            let LILStream = await this.ldesinldp.readAllMembers(new Date(this.startTime), new Date(this.endTime));
+            let LILStream = await this.ldesinldp.readMembersSorted({
+                from: new Date(this.startTime),
+                until: new Date(this.endTime),
+                chronological: true
+            })
             LILStream.on('data', async (data: any) => {
                 let LILStreamStore = new Store(data.quads);
                 let bindingStream = await this.queryEngine.queryBindings(`
@@ -73,8 +77,8 @@ export class SinglePodAggregator {
                     }
                 });
             });
-            this.aggregationEmitter.on('RStream', async (binding: any) => {
-                let iterable = binding.values();
+            this.aggregationEmitter.on('RStream', async (object: any) => {
+                let iterable = object.bindings.values();
                 for (let item of iterable) {
                     let AggregationEvent$Timestamp = new Date().getTime();
                     let data = item.value;
